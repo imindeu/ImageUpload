@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ImageUpload</string>
+    <string name="error">Internal error occurred!</string>
+    <string name="history">Image upload history</string>
+    <string name="menu_new">Upload</string>
+    <string name="history_empty">No images yet.</string>
+    <string name="history_thumbnail_description">Image thumbnail</string>
+    <string name="upload_status_waiting">Waiting for upload…</string>
+    <string name="upload_status_ongoing">Uploading…</string>
+    <string name="upload_status_finished">Sent successfully.</string>
 </resources>

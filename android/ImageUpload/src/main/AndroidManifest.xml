@@ -22,6 +22,15 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:enabled="true"
+            android:name="eu.imind.android.imageupload.service.ImageUploadService" />
+        <receiver android:name="eu.imind.android.imageupload.service.NetworkChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="YOUR_API_KEY_HERE" />
