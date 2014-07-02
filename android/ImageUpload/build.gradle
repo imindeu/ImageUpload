@@ -1,5 +1,7 @@
 apply plugin: 'android'
 apply plugin: 'crashlytics'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
 
 android {
     compileSdkVersion 19
@@ -45,6 +47,11 @@ android {
 
     lintOptions {
         abortOnError false
+        quiet true
+        xmlReport true
+        xmlOutput file("${project.buildDir}/reports/lint/lint.xml")
+        htmlReport true
+        htmlOutput file("${project.buildDir}/reports/lint/lint.html")
     }
 }
 
@@ -58,4 +65,32 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.+'
     compile 'com.squareup:otto:1.3.+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+// *** Checkstyle config *** //
+check.dependsOn 'checkstyle'
+task checkstyle(type: Checkstyle) {
+    configFile file("${project.rootDir}/code_analysis/config/checkstyle.xml")
+    reports.xml.destination = file("${project.buildDir}/reports/checkstyle/checkstyle.xml")
+    ignoreFailures = true
+    showViolations = false
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    classpath = files()
+}
+
+// *** PMD config *** //
+check.dependsOn 'pmd'
+task pmd (type: Pmd, dependsOn: assembleDebug) {
+    group 'verification'
+    ruleSetFiles = files("${project.rootDir}/code_analysis/config/pmd.xml")
+    reports.xml.destination = file("${project.buildDir}/reports/pmd/pmd.xml")
+    reports.html.destination = file("${project.buildDir}/reports/pmd/pmd.html")
+    source = fileTree('src/main/java')
+    ignoreFailures = true
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }
