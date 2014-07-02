@@ -31,6 +31,17 @@ public class ImageUploadApplication extends Application {
         return mInst.mDB;
     }
 
+    public static void setDB(DB db) {
+        assert mInst != null;
+        mInst.mDB = db;
+    }
+
+    public static void resetDB() {
+        if (mInst != null) {
+            mInst.mDB = new DB(mInst);
+        }
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
