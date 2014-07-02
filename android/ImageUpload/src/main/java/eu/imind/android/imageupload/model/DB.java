@@ -14,6 +14,7 @@ public class DB extends SQLiteOpenHelper {
     private static final String NAME = "ImageUpload";
 
     private Context mContext;
+    private UserImageDAO userImageDAO = new UserImageDAO();
 
     public DB(Context context) {
         super(context, NAME, null, VERSION);
@@ -22,12 +23,12 @@ public class DB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        UserImage.onCreate(db);
+        userImageDAO.onCreate(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        UserImage.onUpgrade(db, oldVersion, newVersion);
+        userImageDAO.onUpgrade(db, oldVersion, newVersion);
     }
 
     public void save(UserImage entity) {
@@ -35,7 +36,7 @@ public class DB extends SQLiteOpenHelper {
     }
 
     public void save(UserImage entity, boolean upload) {
-        entity.save(getWritableDatabase());
+        userImageDAO.save(entity, getWritableDatabase());
         if (upload) {
             uploadAsync(entity);
         }
@@ -48,18 +49,18 @@ public class DB extends SQLiteOpenHelper {
     }
 
     public void remove(UserImage entity) {
-        entity.remove(getWritableDatabase());
+        userImageDAO.remove(entity, getWritableDatabase());
     }
 
     public UserImage findUserImageById(long id) {
-        return UserImage.findById(id, getReadableDatabase());
+        return userImageDAO.findById(id, getReadableDatabase());
     }
 
     public List<UserImage> findUserImagePending() {
-        return UserImage.findPending(getReadableDatabase());
+        return userImageDAO.findPending(getReadableDatabase());
     }
 
     public List<UserImage> findUserImageAll() {
-        return UserImage.findAll(getReadableDatabase());
+        return userImageDAO.findAll(getReadableDatabase());
     }
 }
