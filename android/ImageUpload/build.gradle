@@ -3,7 +3,7 @@ apply plugin: 'crashlytics'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.2"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 8
@@ -41,6 +41,10 @@ android {
             buildConfigField "boolean", "USE_CRASHLYTICS", "false"
             ext.enableCrashlytics = false
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
