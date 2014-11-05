@@ -1,4 +1,4 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
 apply plugin: 'checkstyle'
 apply plugin: 'pmd'
@@ -12,7 +12,7 @@ android {
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
-        packageName "eu.imind.android.imageupload"
+        applicationId "eu.imind.android.imageupload"
         buildConfigField "boolean", "USE_CRASHLYTICS", "true"
 
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
@@ -25,7 +25,7 @@ android {
         }
 
         daily {
-            packageName = android.defaultConfig.packageName + ".daily"
+            applicationId = android.defaultConfig.applicationId + ".daily"
             versionName = android.defaultConfig.versionName + "-DAILY"
             buildConfigField "boolean", "USE_CRASHLYTICS", "false"
             ext.enableCrashlytics = false
@@ -40,7 +40,7 @@ android {
         }
 
         debug {
-            packageNameSuffix '.debug'
+            applicationIdSuffix '.debug'
             versionNameSuffix '-DEBUG'
             buildConfigField "boolean", "USE_CRASHLYTICS", "false"
             ext.enableCrashlytics = false
@@ -62,8 +62,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:+'
-    compile 'com.android.support:appcompat-v7:+'
+    compile 'com.android.support:support-v4:19.+'
+    compile 'com.android.support:appcompat-v7:19.+'
     compile 'com.crashlytics.android:crashlytics:1.+'
     compile 'com.jakewharton:butterknife:5.1.+'
     compile 'com.squareup.okhttp:okhttp:1.6.+'
@@ -106,7 +106,7 @@ task checkstyle(type: Checkstyle) {
 }
 
 // *** PMD config *** //
-check.dependsOn 'pmd'
+//check.dependsOn 'pmd'
 task pmd (type: Pmd, dependsOn: assembleDebug) {
     group 'verification'
     ruleSetFiles = files("${project.rootDir}/code_analysis/config/pmd.xml")
